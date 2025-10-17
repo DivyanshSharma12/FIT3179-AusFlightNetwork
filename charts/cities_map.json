@@ -13,6 +13,49 @@
       "transform": [{ "filter": "datum.properties.name == 'Australia'" }],
       "mark": { "type": "geoshape", "fill": "#eee", "stroke": "white" }
     },
+
+    {
+      "params": [
+        {
+          "name": "yr",
+          "value": 2020,
+          "bind": { "input": "range", "min": 1984, "max": 2020, "step": 1, "name": "Year: " }
+        }
+      ],
+      "data": { "url": "data/routes_monthly.csv", "format": { "type": "csv" } },
+      "transform": [
+        { "filter": "datum.year == yr" },
+        {
+          "aggregate": [
+            { "op": "sum", "field": "flights", "as": "flights_year" }
+          ],
+          "groupby": ["origin", "destination", "lon_o", "lat_o", "lon_d", "lat_d", "year"]
+        }
+      ],
+      "mark": { "type": "rule", "strokeCap": "round" },
+      "encoding": {
+        "longitude": { "field": "lon_o", "type": "quantitative" },
+        "latitude":  { "field": "lat_o", "type": "quantitative" },
+        "longitude2": { "field": "lon_d" },
+        "latitude2":  { "field": "lat_d" },
+
+        "stroke": { "value": "#6c7a89" },
+        "strokeOpacity": { "value": 0.6 },
+        "strokeWidth": {
+          "field": "flights_year",
+          "type": "quantitative",
+          "scale": { "type": "sqrt", "range": [1.5, 7] }
+        },
+
+        "tooltip": [
+          { "field": "origin", "title": "From" },
+          { "field": "destination", "title": "To" },
+          { "field": "year", "title": "Year" },
+          { "field": "flights_year", "title": "Flights (total, year)" }
+        ]
+      }
+    },
+
     {
       "data": { "url": "data/cities_7.csv", "format": { "type": "csv" } },
       "mark": { "type": "circle", "opacity": 0.95 },
