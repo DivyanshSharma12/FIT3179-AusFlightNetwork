@@ -3,12 +3,7 @@
   "width": 900,
   "height": 520,
   "title": "Major Australian Cities (primary airports)",
-  "projection": {
-    "type": "equalEarth",
-    "center": [134, -25],
-    "rotate": [0, 0, 10],
-    "scale": 900
-}
+  "projection": { "type": "equalEarth", "center": [134, -25], "rotate": [0, 0, 10], "scale": 900 },
   "layer": [
     {
       "data": {
@@ -17,6 +12,22 @@
       },
       "transform": [ { "filter": "datum.properties.name == 'Australia'" } ],
       "mark": { "type": "geoshape", "fill": "#eee", "stroke": "white" }
+    },
+    {
+      "data": { "url": "data/routes_subset.csv" },
+      "mark": { "type": "rule", "opacity": 0.6 },
+      "encoding": {
+        "longitude": { "field": "lon_o", "type": "quantitative" },
+        "latitude": { "field": "lat_o", "type": "quantitative" },
+        "longitude2": { "field": "lon_d" },
+        "latitude2": { "field": "lat_d" },
+        "strokeWidth": { "value": 3 },
+        "color": { "value": "#6c7a89" },
+        "tooltip": [
+          { "field": "origin", "title": "From" },
+          { "field": "destination", "title": "To" }
+        ]
+      }
     },
     {
       "data": { "url": "data/cities_7.csv" },
