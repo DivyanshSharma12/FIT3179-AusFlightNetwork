@@ -18,12 +18,12 @@
       "params": [
         {
           "name": "yr",
-          "value": 2021,
-          "bind": { "input": "range", "min": 1984, "max": 2021, "step": 1, "name": "Year: " }
+          "value": 2020,
+          "bind": { "input": "range", "min": 1984, "max": 2020, "step": 1, "name": "Year: " }
         },
         {
           "name": "mo",
-          "value": 2,
+          "value": 1,
           "bind": { "input": "select", "options": [1,2,3,4,5,6,7,8,9,10,11,12], "name": "Month: " }
         }
       ],
@@ -37,7 +37,6 @@
         "latitude":  { "field": "lat_o", "type": "quantitative" },
         "longitude2": { "field": "lon_d" },
         "latitude2":  { "field": "lat_d" },
-
         "stroke": { "value": "#6c7a89" },
         "strokeOpacity": { "value": 0.6 },
         "strokeWidth": {
@@ -45,13 +44,13 @@
           "type": "quantitative",
           "scale": { "type": "sqrt", "range": [1.5, 6] }
         },
-
         "tooltip": [
           { "field": "origin", "title": "From" },
           { "field": "destination", "title": "To" },
           { "field": "year", "title": "Year" },
           { "field": "month", "title": "Month" },
-          { "field": "flights", "title": "Flights (month)" }
+          { "field": "flights", "title": "Flights (month)" },
+          { "field": "passengers", "title": "Passengers (month)" }
         ]
       }
     },
