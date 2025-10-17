@@ -5,19 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Australia’s Flight Network</title>
 
+  <!-- Vega libraries -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
   <style>
-    * { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important; }
+    /* Page-wide font (match this in charts/cities_map.json config) */
+    body {
+      margin: 0;
+      background: white;           /* was #fff */
+      color: black;                /* was #000 */
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
 
-    html, body { margin: 0; background: white; color: black; }
-
+    /* Layout */
     .page { max-width: 1100px; margin: 40px auto 64px; padding: 0 16px; }
     header { text-align: center; margin-bottom: 22px; }
     h1 { margin: 0 0 8px; letter-spacing: -0.01em; }
-    .lede { color: gray; max-width: 860px; margin: 0 auto 8px; }
+    .lede { color: gray; max-width: 860px; margin: 0 auto 8px; }  /* was a hex gray */
 
     .layout {
       display: grid;
@@ -25,22 +31,24 @@
       gap: 18px;
       align-items: start;
     }
-    @media (max-width:1080px) { .layout { grid-template-columns: 1fr; } }
+    @media (max-width:1080px){ .layout { grid-template-columns: 1fr; } }
 
+    /* Map container card */
     .viz-card {
-      background: white;
+      background: white;           /* was #fff */
       border-radius: 12px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+      box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
       padding: 20px;
       overflow: hidden;
     }
 
+    /* Right-side text (plain) */
     .text-card { padding: 0 6px; background: transparent; }
-
-    #citiesMap { width: 100%; }
-
     .text-card h3 { margin: 0 0 10px; }
     .text-card p  { margin: 0 0 10px; line-height: 1.55; }
+
+    /* Ensure Vega resizes to the card */
+    #citiesMap { width: 100%; }
   </style>
 </head>
 
@@ -49,22 +57,30 @@
     <header>
       <h1>Australia’s Flight Network</h1>
       <p class="lede">
-        Australia's flight network is the backbone of our connectivity as a nation. Being the sixth largest country in the world, lots of cities are separated by large distances, making air travel the primary mode of transport for travelling between one city and another. The routes between Melbourne, Sydney and Brisbane represent some of the busiest in the world. The following visualisation explores Australia’s flight network over time, highlighting trends and disruptions that have occurred.
+        Australia's flight network is the backbone of our connectivity as a nation. Being the sixth largest country in the world,
+        lots of cities are separated by large distances, making air travel the primary mode of transport for travelling between one city and another.
+        The routes between Melbourne, Sydney and Brisbane represent some of the busiest in the world. The following visualisation explores Australia’s
+        flight network over time, highlighting trends and disruptions that have occurred.
       </p>
     </header>
 
     <section class="layout">
+      <!-- LEFT: Map -->
       <div class="viz-card">
         <div id="citiesMap" aria-label="Map of major Australian city flight routes"></div>
       </div>
 
+      <!-- RIGHT: Plain text -->
       <aside class="text-card">
         <h3>The Map</h3>
         <p>
-          The map highlights how air traffic reflects where people live and do business. The strong east-coast routes show how concentrated Australia’s population and economy are, while thinner lines to Perth and Darwin remind us how far and isolated those cities are.
+          The map highlights how air traffic reflects where people live and do business. The strong east-coast routes show how concentrated Australia’s
+          population and economy are, while thinner lines to Perth and Darwin remind us how far and isolated those cities are.
         </p>
         <p>
-            You can also see how the network responds to major events. The sharp fall in 2020 captures the impact of COVID-19 lockdowns, and the recovery in later years shows how quickly air travel bounced back. Overall, the trends here show how air travel not only connects cities but also reflects the country’s resilience and changing travel habits.
+          You can also see how the network responds to major events. The sharp fall in 2020 captures the impact of COVID-19 lockdowns, and the recovery
+          in later years shows how quickly air travel bounced back. Overall, the trends here show how air travel not only connects cities but also reflects
+          the country’s resilience and changing travel habits.
         </p>
       </aside>
     </section>
