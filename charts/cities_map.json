@@ -14,24 +14,44 @@
       "mark": { "type": "geoshape", "fill": "#eee", "stroke": "white" }
     },
 
+    /* ---- ROUTES (monthly, with Year & Month selectors) ---- */
     {
-      "data": { "url": "data/routes_subset.csv", "format": { "type": "csv" } },
+      "params": [
+        { "name": "yr", "value": 2021,
+          "bind": { "input": "range", "min": 1984, "max": 2021, "step": 1, "name": "Year: " } },
+        { "name": "mo", "value": 2,
+          "bind": { "input": "select", "options": [1,2,3,4,5,6,7,8,9,10,11,12], "name": "Month: " } }
+      ],
+      "data": { "url": "data/routes_monthly.csv", "format": { "type": "csv" } },
+      "transform": [
+        { "filter": "datum.year == yr && datum.month == mo" }
+      ],
       "mark": { "type": "rule", "strokeCap": "round" },
       "encoding": {
         "longitude": { "field": "lon_o", "type": "quantitative" },
         "latitude":  { "field": "lat_o", "type": "quantitative" },
         "longitude2": { "field": "lon_d" },
         "latitude2":  { "field": "lat_d" },
+
         "stroke": { "value": "#6c7a89" },
-        "strokeWidth": { "value": 3 },
         "strokeOpacity": { "value": 0.6 },
+
+        "strokeWidth": {
+          "field": "flights", "type": "quantitative",
+          "scale": { "type": "sqrt", "range": [1.5, 6] }
+        },
+
         "tooltip": [
           { "field": "origin", "title": "From" },
-          { "field": "destination", "title": "To" }
+          { "field": "destination", "title": "To" },
+          { "field": "year", "title": "Year" },
+          { "field": "month", "title": "Month" },
+          { "field": "flights", "title": "Flights (month)" }
         ]
       }
     },
 
+    /* ---- CITY POINTS ---- */
     {
       "data": { "url": "data/cities_7.csv", "format": { "type": "csv" } },
       "mark": { "type": "circle", "opacity": 0.95 },
@@ -41,6 +61,8 @@
         "size": { "value": 140 }
       }
     },
+
+    /* ---- CITY LABELS ---- */
     {
       "data": { "url": "data/cities_7.csv", "format": { "type": "csv" } },
       "mark": { "type": "text", "dy": -10, "fontSize": 12 },
