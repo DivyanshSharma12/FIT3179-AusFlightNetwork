@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Australia’s Flight Network</title>
 
-
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -21,19 +20,19 @@
     .lede{color:var(--muted);max-width:860px;margin:0 auto 8px}
 
     .layout{
-  display: grid;
-  grid-template-columns: minmax(600px, 1.3fr) minmax(420px, 1fr);
-  gap: 28px;
-  align-items: start;
-}
-    @media (max-width: 930px){ .layout{ grid-template-columns: 1fr; } }
+      display:grid;
+      grid-template-columns: minmax(600px, 1.3fr) minmax(420px, 1fr);
+      gap:28px;
+      align-items:start;
+    }
+    @media (max-width:1080px){ .layout{ grid-template-columns: 1fr; } }
 
     .viz-card, .text-card{
       background:var(--card);
       border-radius:var(--radius);
       box-shadow:0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
     }
-    .viz-card{ padding:16px; }
+    .viz-card{ padding:20px; overflow:hidden; } /* prevent overlap into right column */
     .text-card{ padding:20px 22px; }
 
     #citiesMap{ width:100%; }
@@ -55,12 +54,10 @@
     </header>
 
     <section class="layout">
-      <!-- LEFT: MAP -->
       <div class="viz-card">
         <div id="citiesMap" aria-label="Map of major Australian city flight routes"></div>
       </div>
 
-      <!-- RIGHT: TEXT -->
       <aside class="text-card">
         <p class="kicker">About this view</p>
         <h3 class="side-title">What the map shows</h3>
@@ -73,6 +70,7 @@
           Drag the slider to compare years. Notice dips in 2020 during the pandemic and
           recovery afterwards (as available in the data). Hover a route to see exact totals.
         </p>
+        <p class="note">Data: BITRE city-pair statistics (filtered to the seven capitals).</p>
       </aside>
     </section>
   </main>
