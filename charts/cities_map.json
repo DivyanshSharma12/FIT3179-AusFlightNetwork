@@ -13,19 +13,32 @@
       "transform": [{ "filter": "datum.properties.name == 'Australia'" }],
       "mark": { "type": "geoshape", "fill": "#eee", "stroke": "white" }
     },
+
+    {
+      "data": { "url": "data/routes_subset.csv", "format": { "type": "csv" } },
+      "mark": { "type": "rule", "strokeCap": "round" },
+      "encoding": {
+        "longitude": { "field": "lon_o", "type": "quantitative" },
+        "latitude":  { "field": "lat_o", "type": "quantitative" },
+        "longitude2": { "field": "lon_d" },
+        "latitude2":  { "field": "lat_d" },
+        "stroke": { "value": "#6c7a89" },
+        "strokeWidth": { "value": 3 },
+        "strokeOpacity": { "value": 0.6 },
+        "tooltip": [
+          { "field": "origin", "title": "From" },
+          { "field": "destination", "title": "To" }
+        ]
+      }
+    },
+
     {
       "data": { "url": "data/cities_7.csv", "format": { "type": "csv" } },
       "mark": { "type": "circle", "opacity": 0.95 },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude": { "field": "lat", "type": "quantitative" },
-        "size": { "value": 140 },
-        "tooltip": [
-          { "field": "city" },
-          { "field": "airport_name", "title": "Airport" },
-          { "field": "iata", "title": "IATA" },
-          { "field": "state" }
-        ]
+        "latitude":  { "field": "lat", "type": "quantitative" },
+        "size": { "value": 140 }
       }
     },
     {
@@ -33,7 +46,7 @@
       "mark": { "type": "text", "dy": -10, "fontSize": 12 },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude": { "field": "lat", "type": "quantitative" },
+        "latitude":  { "field": "lat", "type": "quantitative" },
         "text": { "field": "city", "type": "nominal" }
       }
     }
