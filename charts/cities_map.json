@@ -3,7 +3,12 @@
   "width": 900,
   "height": 520,
   "title": "Major Australian Cities (primary airports)",
-  "projection": { "type": "mercator", "center": [134, -25], "scale": 900 },
+  "projection": {
+    "type": "equalEarth",
+    "center": [134, -25],
+    "rotate": [0, 0, 10],
+    "scale": 900
+}
   "layer": [
     {
       "data": {
