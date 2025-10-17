@@ -11,37 +11,36 @@
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
 
   <style>
-    :root {
-      --text: #1b1b1b;
-      --muted: #6b7280;
-      --card: #ffffff;
-      --radius: 12px;
+    :root { --text:#1b1b1b; --muted:#6b7280; --card:#fff; --radius:12px; }
+    html,body{margin:0;background:#fafafa;color:var(--text);}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+
+    .page{max-width:1100px;margin:40px auto 64px;padding:0 16px;}
+    header{text-align:center;margin-bottom:22px}
+    h1{margin:0 0 8px;letter-spacing:-.01em}
+    .lede{color:var(--muted);max-width:860px;margin:0 auto 8px}
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap:24px;
+      align-items:start;
     }
-    html, body { margin: 0; padding: 0; background: #fafafa; color: var(--text); }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    @media (max-width: 930px){ .layout{ grid-template-columns: 1fr; } }
 
-    .page { max-width: 1100px; margin: 40px auto 64px; padding: 0 16px; }
-
-    header { text-align: center; margin-bottom: 6px; }
-    h1 { font-weight: 750; letter-spacing: -0.01em; margin: 0 0 8px; }
-    .lede {
-      text-align: center;
-      max-width: 860px;
-      margin: 0 auto 22px;
-      color: var(--muted);
-      line-height: 1.55;
-      font-size: 1.05rem;
+    .viz-card, .text-card{
+      background:var(--card);
+      border-radius:var(--radius);
+      box-shadow:0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
     }
+    .viz-card{ padding:16px; }
+    .text-card{ padding:20px 22px; }
 
-    .viz-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
-      padding: 16px;
-    }
-
-    /* keep the viz nicely centered and responsive */
-    #citiesMap { width: 100%; }
+    #citiesMap{ width:100%; }
+    .kicker{ font-weight:600; text-transform:uppercase; letter-spacing:.06em; font-size:.8rem; color:#8a8f98; margin:0 0 6px; }
+    .side-title{ margin:0 0 10px; }
+    .side-copy{ color:var(--muted); line-height:1.55; }
+    .note{ font-size:.9rem; color:lightgray; margin-top:10px; }
   </style>
 </head>
 
@@ -50,21 +49,36 @@
     <header>
       <h1>Australia’s Flight Network</h1>
       <p class="lede">
-        A view of air connectivity between Australia’s major capital cities. Use the year
-        slider to explore how the network changes over time. Line colour encodes the total
-        number of flights between each city pair for the selected year.
+        Explore air connectivity between Australia’s capital cities. Use the year slider to see how traffic changes.
+        Line colour shows the total number of flights on each city-pair for the selected year.
       </p>
     </header>
 
-    <section class="viz-card">
-      <div id="citiesMap" aria-label="Map of major Australian city flight routes"></div>
+    <section class="layout">
+      <!-- LEFT: MAP -->
+      <div class="viz-card">
+        <div id="citiesMap" aria-label="Map of major Australian city flight routes"></div>
+      </div>
+
+      <!-- RIGHT: TEXT -->
+      <aside class="text-card">
+        <p class="kicker">About this view</p>
+        <h3 class="side-title">What the map shows</h3>
+        <p class="side-copy">
+          Each line connects two capital cities. The colour intensity represents the
+          <em>total flights in that year</em> (sum of monthly services). This highlights
+          Australia’s busiest corridors—often the east-coast triangle (SYD–MEL–BNE).
+        </p>
+        <p class="side-copy">
+          Drag the slider to compare years. Notice dips in 2020 during the pandemic and
+          recovery afterwards (as available in the data). Hover a route to see exact totals.
+        </p>
+      </aside>
     </section>
   </main>
 
   <script>
-    // Cache-buster to avoid GitHub Pages caching old JSON during development
-    vegaEmbed('#citiesMap', 'charts/cities_map.json?v=9', { actions: false })
-      .catch(console.error);
+    vegaEmbed('#citiesMap', 'charts/cities_map.json', { actions: false }).catch(console.error);
   </script>
 </body>
 </html>
