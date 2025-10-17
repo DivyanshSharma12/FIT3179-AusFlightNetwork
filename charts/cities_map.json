@@ -38,13 +38,16 @@
         "latitude":  { "field": "lat_o", "type": "quantitative" },
         "longitude2": { "field": "lon_d" },
         "latitude2":  { "field": "lat_d" },
-        "stroke": { "value": "#6c7a89" },
-        "strokeOpacity": { "value": 0.6 },
-        "strokeWidth": {
+
+        "strokeWidth": { "value": 2 },
+
+        "color": {
           "field": "flights_year",
           "type": "quantitative",
-          "scale": { "type": "sqrt", "range": [1.5, 7] }
+          "scale": { "scheme": "blues" },
+          "legend": { "title": "Flights (year)" }
         },
+
         "tooltip": [
           { "field": "origin", "title": "From" },
           { "field": "destination", "title": "To" },
@@ -60,13 +63,7 @@
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
         "latitude":  { "field": "lat", "type": "quantitative" },
-        "size": { "value": 140 },
-        "tooltip": [
-          { "field": "city" },
-          { "field": "airport_name", "title": "Airport" },
-          { "field": "iata", "title": "IATA" },
-          { "field": "state" }
-        ]
+        "size": { "value": 140 }
       }
     },
     {
