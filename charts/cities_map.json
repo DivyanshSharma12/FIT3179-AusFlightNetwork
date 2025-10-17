@@ -13,45 +13,53 @@
       "transform": [ { "filter": "datum.properties.name == 'Australia'" } ],
       "mark": { "type": "geoshape", "fill": "#eee", "stroke": "white" }
     },
+
     {
+      "params": [
+        {
+          "name": "routeHover",
+          "select": { "type": "point", "fields": ["origin","destination"], "on": "mouseover", "clear": "mouseout" }
+        }
+      ],
       "data": { "url": "data/routes_subset.csv" },
-      "mark": { "type": "rule", "opacity": 0.6 },
+      "mark": { "type": "rule", "strokeCap": "round" },
       "encoding": {
         "longitude": { "field": "lon_o", "type": "quantitative" },
         "latitude": { "field": "lat_o", "type": "quantitative" },
         "longitude2": { "field": "lon_d" },
         "latitude2": { "field": "lat_d" },
-        "strokeWidth": { "value": 3 },
-        "color": { "value": "#6c7a89" },
+        "strokeWidth": {
+          "condition": { "param": "routeHover", "value": 5 },
+          "value": 2.2
+        },
+        "strokeOpacity": {
+          "condition": { "param": "routeHover", "value": 0.9 },
+          "value": 0.35
+        },
+        "stroke": {
+          "condition": { "param": "routeHover", "value": "#5b6773" },
+          "value": "#aab3bd"
+        },
         "tooltip": [
           { "field": "origin", "title": "From" },
           { "field": "destination", "title": "To" }
         ]
       }
     },
+
     {
       "data": { "url": "data/cities_7.csv" },
       "mark": { "type": "circle", "opacity": 0.95 },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
         "latitude": { "field": "lat", "type": "quantitative" },
-        "size": { "value": 140 },
-        "tooltip": [
-          { "field": "city" },
-          { "field": "airport_name", "title": "Airport" },
-          { "field": "iata", "title": "IATA" },
-          { "field": "state" }
-        ]
+        "size": { "value": 140 }
       }
     },
     {
       "data": { "url": "data/cities_7.csv" },
-      "mark": { "type": "text", "dy": -10 },
+      "mark": { "type": "text", "dy": -10, "fontSize": 12 },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
         "latitude": { "field": "lat", "type": "quantitative" },
         "text": { "field": "city", "type": "nominal" }
-      }
-    }
-  ]
-}
