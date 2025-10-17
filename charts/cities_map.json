@@ -1,9 +1,9 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "width": 900,
+  "width": "container",
   "height": 520,
   "title": "Major Australian Cities (primary airports)",
-  "projection": { "type": "mercator", "center": [134, -26], "scale": 700 },
+  "projection": { "type": "mercator", "center": [134, -26], "scale": 600 },
 
   "params": [
     {
@@ -40,14 +40,12 @@
         "latitude2":  { "field": "lat_d" },
 
         "strokeWidth": { "value": 2 },
-
         "color": {
           "field": "flights_year",
           "type": "quantitative",
           "scale": { "scheme": "blues" },
           "legend": { "title": "Flights (year)" }
         },
-
         "tooltip": [
           { "field": "origin", "title": "From" },
           { "field": "destination", "title": "To" },
