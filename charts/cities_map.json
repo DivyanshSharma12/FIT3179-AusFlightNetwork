@@ -14,7 +14,6 @@
       "mark": { "type": "geoshape", "fill": "#eee", "stroke": "white" }
     },
 
-    /* ---- ROUTES (monthly, with Year & Month selectors) ---- */
     {
       "params": [
         { "name": "yr", "value": 2021,
@@ -51,7 +50,6 @@
       }
     },
 
-    /* ---- CITY POINTS ---- */
     {
       "data": { "url": "data/cities_7.csv", "format": { "type": "csv" } },
       "mark": { "type": "circle", "opacity": 0.95 },
@@ -62,7 +60,6 @@
       }
     },
 
-    /* ---- CITY LABELS ---- */
     {
       "data": { "url": "data/cities_7.csv", "format": { "type": "csv" } },
       "mark": { "type": "text", "dy": -10, "fontSize": 12 },
