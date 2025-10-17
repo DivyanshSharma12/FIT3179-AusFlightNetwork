@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Australia’s Flight Network</title>
 
-  <!-- Vega libraries -->
+
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
@@ -21,11 +21,11 @@
     .lede{color:var(--muted);max-width:860px;margin:0 auto 8px}
 
     .layout{
-      display:grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap:24px;
-      align-items:start;
-    }
+  display: grid;
+  grid-template-columns: minmax(600px, 1.3fr) minmax(420px, 1fr);
+  gap: 28px;
+  align-items: start;
+}
     @media (max-width: 930px){ .layout{ grid-template-columns: 1fr; } }
 
     .viz-card, .text-card{
