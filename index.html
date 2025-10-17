@@ -22,7 +22,7 @@
     .layout{
       display:grid;
       grid-template-columns: minmax(600px, 1.4fr) minmax(420px, 1fr);
-      gap:18px;                 /* tighter gap so text is closer to the map */
+      gap:18px;
       align-items:start;
     }
     @media (max-width:1080px){ .layout{ grid-template-columns: 1fr; } }
@@ -32,21 +32,15 @@
       border-radius:var(--radius);
       box-shadow:0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
       padding:20px;
-      overflow:hidden;         
+      overflow:hidden;
     }
 
-    .text-card{
-      background:transparent;
-      border-radius:0;
-      box-shadow:none;
-      padding:0 6px;
-    }
+    .text-card{ padding:0 6px; background:transparent; }
 
     #citiesMap{ width:100%; }
-    .kicker{ font-weight:600; text-transform:uppercase; letter-spacing:.06em; font-size:.8rem; color:#8a8f98; margin:0 0 6px; }
-    .side-title{ margin:0 0 10px; }
-    .side-copy{ color:var(--muted); line-height:1.55; }
-    .note{ font-size:.9rem; color:lightgray; margin-top:10px; }
+
+    .text-card h3{ margin:0 0 10px; }
+    .text-card p{ margin:0 0 10px; line-height:1.55; }
   </style>
 </head>
 
@@ -66,18 +60,17 @@
       </div>
 
       <aside class="text-card">
-        <p class="kicker">About this view</p>
-        <h3 class="side-title">What the map shows</h3>
-        <p class="side-copy">
+        <h3>What the map shows</h3>
+        <p>
           Each line connects two capital cities. The colour intensity represents the
-          <em>total flights in that year</em> (sum of monthly services). This highlights
+          total flights in that year (sum of monthly services). This highlights
           Australia’s busiest corridors—often the east-coast triangle (SYD–MEL–BNE).
         </p>
-        <p class="side-copy">
+        <p>
           Drag the slider to compare years. Notice dips in 2020 during the pandemic and
           recovery afterwards (as available in the data). Hover a route to see exact totals.
         </p>
-        <p class="note">Data: BITRE city-pair statistics (filtered to the seven capitals).</p>
+        <p>Data source: BITRE city-pair statistics (filtered to the seven capitals).</p>
       </aside>
     </section>
   </main>
