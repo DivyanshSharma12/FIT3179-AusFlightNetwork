@@ -10,9 +10,10 @@
         "url": "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json",
         "format": { "type": "topojson", "feature": "countries" }
       },
-      "transform": [ { "filter": "datum.properties.name == 'Australia'" } ],
+      "transform": [{ "filter": "datum.properties.name == 'Australia'" }],
       "mark": { "type": "geoshape", "fill": "#eee", "stroke": "white" }
     },
+
     {
       "params": [
         {
@@ -20,7 +21,7 @@
           "select": { "type": "point", "fields": ["origin","destination"], "on": "mouseover", "clear": "mouseout" }
         }
       ],
-      "data": { "url": "data/routes_subset.csv?v=3" },
+      "data": { "url": "data/routes_subset.csv", "format": { "type": "csv" } },
       "mark": { "type": "rule", "strokeCap": "round" },
       "encoding": {
         "longitude": { "field": "lon_o", "type": "quantitative" },
@@ -45,8 +46,9 @@
         ]
       }
     },
+
     {
-      "data": { "url": "data/cities_7.csv?v=3" },
+      "data": { "url": "data/cities_7.csv", "format": { "type": "csv" } },
       "mark": { "type": "circle", "opacity": 0.95 },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
@@ -55,7 +57,7 @@
       }
     },
     {
-      "data": { "url": "data/cities_7.csv?v=3" },
+      "data": { "url": "data/cities_7.csv", "format": { "type": "csv" } },
       "mark": { "type": "text", "dy": -10, "fontSize": 12 },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
