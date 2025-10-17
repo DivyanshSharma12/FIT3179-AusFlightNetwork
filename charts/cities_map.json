@@ -13,7 +13,6 @@
       "transform": [ { "filter": "datum.properties.name == 'Australia'" } ],
       "mark": { "type": "geoshape", "fill": "#eee", "stroke": "white" }
     },
-
     {
       "params": [
         {
@@ -21,7 +20,7 @@
           "select": { "type": "point", "fields": ["origin","destination"], "on": "mouseover", "clear": "mouseout" }
         }
       ],
-      "data": { "url": "data/routes_subset.csv" },
+      "data": { "url": "data/routes_subset.csv?v=3" },
       "mark": { "type": "rule", "strokeCap": "round" },
       "encoding": {
         "longitude": { "field": "lon_o", "type": "quantitative" },
@@ -46,9 +45,8 @@
         ]
       }
     },
-
     {
-      "data": { "url": "data/cities_7.csv" },
+      "data": { "url": "data/cities_7.csv?v=3" },
       "mark": { "type": "circle", "opacity": 0.95 },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
@@ -57,9 +55,13 @@
       }
     },
     {
-      "data": { "url": "data/cities_7.csv" },
+      "data": { "url": "data/cities_7.csv?v=3" },
       "mark": { "type": "text", "dy": -10, "fontSize": 12 },
       "encoding": {
         "longitude": { "field": "lon", "type": "quantitative" },
         "latitude": { "field": "lat", "type": "quantitative" },
         "text": { "field": "city", "type": "nominal" }
+      }
+    }
+  ]
+}
