@@ -3,7 +3,7 @@
   "width": 900,
   "height": 520,
   "title": "Major Australian Cities (primary airports)",
-  "projection": { "type": "equalEarth", "center": [134, -25], "rotate": [0, 0, 10], "scale": 900 },
+  "projection": { "type": "mercator", "center": [134, -26], "scale": 1000 },
   "layer": [
     {
       "data": {
@@ -29,41 +29,4 @@
         "longitude2": { "field": "lon_d" },
         "latitude2": { "field": "lat_d" },
         "strokeWidth": {
-          "condition": { "param": "routeHover", "value": 5 },
-          "value": 2.2
-        },
-        "strokeOpacity": {
-          "condition": { "param": "routeHover", "value": 0.9 },
-          "value": 0.35
-        },
-        "stroke": {
-          "condition": { "param": "routeHover", "value": "#5b6773" },
-          "value": "#aab3bd"
-        },
-        "tooltip": [
-          { "field": "origin", "title": "From" },
-          { "field": "destination", "title": "To" }
-        ]
-      }
-    },
-
-    {
-      "data": { "url": "data/cities_7.csv", "format": { "type": "csv" } },
-      "mark": { "type": "circle", "opacity": 0.95 },
-      "encoding": {
-        "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude": { "field": "lat", "type": "quantitative" },
-        "size": { "value": 140 }
-      }
-    },
-    {
-      "data": { "url": "data/cities_7.csv", "format": { "type": "csv" } },
-      "mark": { "type": "text", "dy": -10, "fontSize": 12 },
-      "encoding": {
-        "longitude": { "field": "lon", "type": "quantitative" },
-        "latitude": { "field": "lat", "type": "quantitative" },
-        "text": { "field": "city", "type": "nominal" }
-      }
-    }
-  ]
-}
+          "condition":
