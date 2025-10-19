@@ -1,73 +1,54 @@
-{
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text": "On-time performance (national trend + airport ranking)"},
-  "data": {"url": "data/otp_time_series_web.csv"},
-  "transform": [
-    {"calculate": "(toNumber(datum.Departures_On_Time)/toNumber(datum.Sectors_Flown))*100", "as": "on_time_pct"},
-    {"calculate": "toDate(datum.Year+'-'+(datum.Month_Num<10?'0'+datum.Month_Num:datum.Month_Num)+'-01')", "as": "date"},
-    {"filter": {"field": "Departing_Port", "oneOf": ["Sydney","Melbourne","Brisbane","Perth","Adelaide","Hobart","Darwin"]}},
-    {"filter": "datum.Departing_Port !== 'All Ports'"}
-  ],
-  "vconcat": [
-    {
-      "width": 940,
-      "height": 260,
-      "layer": [
-        {
-          "mark": {"type": "line", "point": true},
-          "encoding": {
-            "x": {"field": "date", "type": "temporal", "timeUnit": "yearmonth", "axis": {"title": ""}},
-            "y": {"aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "title": "On-time %"},
-            "tooltip": [
-              {"field": "date", "type": "temporal", "timeUnit": "yearmonth", "title": "Month"},
-              {"aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "format": ".1f", "title": "Mean on-time %"}
-            ]
-          }
-        },
-        {
-          "mark": {"type": "rule", "strokeDash": [4,4], "opacity": 0.7},
-          "encoding": { "x": {"datum": "2021-07-01"} }
-        },
-        {
-          "mark": {"type": "text", "align": "left", "dx": 6, "dy": -8, "fontSize": 12},
-          "encoding": {
-            "x": {"datum": "2021-07-01"},
-            "y": {"datum": 58},
-            "text": {"value": "COVID-19"}
-          }
-        }
-      ]
-    },
-    {
-      "width": 940,
-      "height": {"step": 26},
-      "transform": [
-        {"aggregate": [{"op": "mean", "field": "on_time_pct", "as": "avg_otp"}], "groupby": ["Departing_Port"]}
-      ],
-      "layer": [
-        {
-          "mark": "bar",
-          "encoding": {
-            "y": {"field": "Departing_Port", "type": "ordinal", "sort": "-x", "title": "Airport"},
-            "x": {"field": "avg_otp", "type": "quantitative", "title": "Avg on-time %"},
-            "tooltip": [
-              {"field": "Departing_Port", "title": "Airport"},
-              {"field": "avg_otp", "type": "quantitative", "format": ".1f", "title": "Avg on-time %"}
-            ]
-          }
-        },
-        {
-          "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": 4},
-          "encoding": {
-            "y": {"field": "Departing_Port", "type": "ordinal", "sort": "-x"},
-            "x": {"field": "avg_otp", "type": "quantitative"},
-            "text": {"field": "avg_otp", "type": "quantitative", "format": ".1f"}
-          }
-        }
-      ]
-    }
-  ],
-  "spacing": 12,
-  "padding": 5,
-  "config": {"view": {"stroke": null}, "axis": {"labelFontSize": 11, "titleFontSize": 12}}
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Australia’s Flight Network</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    body{margin:0;background:#fff;color:#000;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+    .page{max-width:1100px;margin:40px auto 64px;padding:0 16px}
+    .layout{display:grid;grid-template-columns:minmax(600px,1.4fr) minmax(420px,1fr);gap:18px;align-items:start}
+    @media (max-width:1080px){.layout{grid-template-columns:1fr}}
+    .viz-card{background:#fff;border-radius:12px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.06);padding:20px;overflow:hidden}
+    .text-card{padding:0 6px}
+    #citiesMap,#top_routes,#otp_overview{width:100%}
+    .mt-36{margin-top:36px}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="layout">
+      <div class="viz-card"><div id="citiesMap"></div></div>
+      <aside class="text-card">
+        <h3>The Map</h3>
+        <p>Strong east-coast routes reflect where people live and work; thinner links to Perth/Darwin show isolation.</p>
+      </aside>
+    </section>
+
+    <section class="layout mt-36">
+      <div class="viz-card">
+        <h3 style="margin:0 0 10px">Top routes</h3>
+        <div id="top_routes"></div>
+      </div>
+      <aside class="text-card">
+        <h3>Route Rankings</h3>
+        <p>“Golden Triangle” routes dominate most years.</p>
+      </aside>
+    </section>
+
+    <section class="viz-card mt-36">
+      <h3 style="margin:0 0 10px">On-Time Performance</h3>
+      <div id="otp_overview"></div>
+    </section>
+  </main>
+
+  <script>
+    vegaEmbed('#citiesMap','charts/cities_map.json',{actions:false}).catch(console.error);
+    vegaEmbed('#top_routes','charts/top_routes.json',{actions:false}).catch(console.error);
+    vegaEmbed('#otp_overview','charts/on_time_perf.json',{actions:false}).catch(console.error);
+  </script>
+</body>
+</html>
