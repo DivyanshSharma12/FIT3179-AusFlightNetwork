@@ -24,14 +24,6 @@
     },
     {
       "width": 940,
-      "data": {
-      },
-      "mark": {"type": "text", "align": "left", "baseline": "top"},
-      "encoding": {"text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0}},
-      "config": {"text": {"fontSize": 12}}
-    },
-    {
-      "width": 940,
       "height": {"step": 26},
       "transform": [
         {"aggregate": [{"op": "mean", "field": "on_time_pct", "as": "avg_otp"}], "groupby": ["Departing_Port"]}
@@ -57,14 +49,6 @@
           }
         }
       ]
-    },
-    {
-      "width": 940,
-      "data": {
-      },
-      "mark": {"type": "text", "align": "left", "baseline": "top"},
-      "encoding": {"text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0}},
-      "config": {"text": {"fontSize": 12}}
     }
   ],
   "spacing": 12,
