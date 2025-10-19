@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text": "On-time performance (brush line to filter ranking)"},
+  "title": {"text": "On-time performance (national trend + airport ranking)"},
   "data": {"url": "data/otp_time_series_web.csv"},
   "transform": [
     {"calculate": "(toNumber(datum.Departures_On_Time)/toNumber(datum.Sectors_Flown))*100", "as": "on_time_pct"},
@@ -12,7 +12,6 @@
     {
       "width": 940,
       "height": 260,
-      "params": [{"name": "brush", "select": {"type": "interval", "encodings": ["x"]}}],
       "mark": {"type": "line", "point": true},
       "encoding": {
         "x": {"field": "date", "type": "temporal", "timeUnit": "yearmonth", "axis": {"title": ""}},
@@ -23,22 +22,23 @@
         ]
       }
     },
-
-
     {
       "width": 940,
-      "data": {"values": [{"txt": "Australia’s national on-time flight performance remained consistently high through the 2000s, averaging between 82–88%. A sharp decline occurred around 2021, reflecting major operational disruptions 
-        during the COVID-19 pandemic. Since then, punctuality has gradually recovered, with current levels stabilising around 75–82% as air travel normalises across the country."}]},
+      "data": {
+        "values": [
+          {
+            "txt": "Australia’s on-time performance stayed around 82–88% through the 2000s, dropped sharply in 2021 during COVID-19, and has recovered to roughly 75–82% by 2024–25."
+          }
+        ]
+      },
       "mark": {"type": "text", "align": "left", "baseline": "top"},
-      "encoding": { "text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0} },
-      "config": { "text": { "fontSize": 12 } }
+      "encoding": {"text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0}},
+      "config": {"text": {"fontSize": 12}}
     },
-
     {
       "width": 940,
       "height": {"step": 26},
       "transform": [
-        {"filter": {"param": "brush"}},
         {"aggregate": [{"op": "mean", "field": "on_time_pct", "as": "avg_otp"}], "groupby": ["Departing_Port"]}
       ],
       "layer": [
@@ -63,14 +63,18 @@
         }
       ]
     },
-
     {
       "width": 940,
-      "data": {"values": [{"txt": "Adelaide stands out as Australia’s most punctual major airport, averaging around 84% of flights departing on time. Perth and Brisbane follow closely behind, both maintaining reliability above 82%. 
-        Sydney and Melbourne record similar performance near 80%, while Hobart and Darwin show slightly lower punctuality, reflecting greater weather and operational variability."}]},
+      "data": {
+        "values": [
+          {
+            "txt": "Adelaide ranks as the most punctual major airport (84%), with Perth and Brisbane close behind (83–82%). Sydney and Melbourne sit near 80%, while Hobart and Darwin are lower (76–78%), indicating more variability."
+          }
+        ]
+      },
       "mark": {"type": "text", "align": "left", "baseline": "top"},
-      "encoding": { "text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0} },
-      "config": { "text": { "fontSize": 12 } }
+      "encoding": {"text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0}},
+      "config": {"text": {"fontSize": 12}}
     }
   ],
   "spacing": 12,
