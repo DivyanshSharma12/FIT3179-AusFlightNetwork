@@ -16,7 +16,17 @@
         {
           "mark": { "type": "line", "point": true },
           "encoding": {
-            "x": { "field": "date", "type": "temporal", "timeUnit": "yearmonth", "axis": { "title": "" } },
+            "x": {
+              "field": "date",
+              "type": "temporal",
+              "timeUnit": "yearmonth",
+              "axis": {
+                "title": "",
+                "tickCount": { "interval": "year", "step": 2 },
+                "labelAngle": 0,
+                "labelOverlap": "greedy"
+              }
+            },
             "y": { "aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "title": "On-time %" },
             "tooltip": [
               { "field": "date", "type": "temporal", "timeUnit": "yearmonth", "title": "Month" },
@@ -24,16 +34,37 @@
             ]
           }
         },
+
+        /* --- SIMPLE ANNOTATION (label + leader line) --- */
         {
-          "mark": { "type": "text", "align": "left", "dx": 6, "dy": -8, "fontSize": 12 },
-          "encoding": {
-            "x": { "datum": "2022-06-01" },
-            "y": { "datum": 55 },
-            "text": { "value": "COVID-19" }
-          }
+          "name": "covidAnno",
+          "data": {
+            "values": [
+              { "annoDate": "2022-06-01", "labelY": 58, "dipY": 52, "label": "COVID-19" }
+            ]
+          },
+          "layer": [
+            {
+              "mark": { "type": "rule", "color": "#a00", "opacity": 0.9 },
+              "encoding": {
+                "x": { "field": "annoDate", "type": "temporal" },
+                "y": { "field": "labelY", "type": "quantitative" },
+                "y2": { "field": "dipY", "type": "quantitative" }
+              }
+            },
+            {
+              "mark": { "type": "text", "align": "left", "dx": 6, "dy": -6, "fontSize": 12, "color": "#a00" },
+              "encoding": {
+                "x": { "field": "annoDate", "type": "temporal" },
+                "y": { "field": "labelY", "type": "quantitative" },
+                "text": { "field": "label" }
+              }
+            }
+          ]
         }
       ]
     },
+
     {
       "width": 940,
       "height": { "step": 26 },
