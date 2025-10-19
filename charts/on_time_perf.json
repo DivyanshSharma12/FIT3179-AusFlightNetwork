@@ -25,11 +25,6 @@
     {
       "width": 940,
       "data": {
-        "values": [
-          {
-            "txt": "Australia’s on-time performance stayed around 82–88% through the 2000s, dropped sharply in 2021 during COVID-19, and has recovered to roughly 75–82% by 2024–25."
-          }
-        ]
       },
       "mark": {"type": "text", "align": "left", "baseline": "top"},
       "encoding": {"text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0}},
@@ -66,11 +61,6 @@
     {
       "width": 940,
       "data": {
-        "values": [
-          {
-            "txt": "Adelaide ranks as the most punctual major airport (84%), with Perth and Brisbane close behind (83–82%)."
-          }
-        ]
       },
       "mark": {"type": "text", "align": "left", "baseline": "top"},
       "encoding": {"text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0}},
