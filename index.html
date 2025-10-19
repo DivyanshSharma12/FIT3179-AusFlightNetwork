@@ -37,13 +37,12 @@
       padding: 20px;
       overflow: hidden;
     }
+
     .text-card { padding: 0 6px; background: transparent; }
     .text-card h3 { margin: 0 0 10px; }
     .text-card p  { margin: 0 0 10px; line-height: 1.55; }
 
     #citiesMap, #top_routes { width: 100%; }
-
-    .viz-card.flat { background: transparent; box-shadow: none; padding: 0; }
 
     .mt-36 { margin-top: 36px; }
   </style>
@@ -80,8 +79,9 @@
       </aside>
     </section>
 
+    <!-- Top routes: chart left (in white card), text right -->
     <section class="layout mt-36">
-      <div class="viz-card flat">
+      <div class="viz-card">
         <h3 style="margin:0 0 10px">Top routes</h3>
         <div id="top_routes" aria-label="Bar chart of top routes by passengers"></div>
       </div>
