@@ -42,7 +42,7 @@
     .text-card h3 { margin: 0 0 10px; }
     .text-card p  { margin: 0 0 10px; line-height: 1.55; }
 
-    #citiesMap, #top_routes { width: 100%; }
+    #citiesMap, #top_routes, #otp_overview { width: 100%; }
 
     .mt-36 { margin-top: 36px; }
   </style>
@@ -97,11 +97,19 @@
         </p>
       </aside>
     </section>
+
+    <section class="viz-card mt-36">
+      <h3 style="margin:0 0 10px">On-Time Performance</h3>
+      <div id="otp_overview" aria-label="On-time performance overview"></div>
+    </section>
   </main>
 
   <script>
     vegaEmbed('#citiesMap', 'charts/cities_map.json', { actions: false }).catch(console.error);
     vegaEmbed('#top_routes', 'charts/top_routes.json', { actions: false }).catch(console.error);
+
+
+    vegaEmbed('#otp_overview', 'charts/on_time_perf.json', { actions: false }).catch(console.error);
   </script>
 </body>
 </html>
