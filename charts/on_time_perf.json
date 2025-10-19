@@ -8,10 +8,10 @@
     {"filter": {"field": "Departing_Port", "oneOf": ["Sydney","Melbourne","Brisbane","Perth","Adelaide","Hobart","Darwin"]}},
     {"filter": "datum.Departing_Port !== 'All Ports'"}
   ],
-  "hconcat": [
+  "vconcat": [
     {
-      "width": 640,
-      "height": 240,
+      "width": 940,
+      "height": 260,
       "params": [{"name": "brush", "select": {"type": "interval", "encodings": ["x"]}}],
       "mark": {"type": "line", "point": true},
       "encoding": {
@@ -24,8 +24,8 @@
       }
     },
     {
-      "width": 320,
-      "height": {"step": 24},
+      "width": 940,
+      "height": {"step": 26},
       "transform": [
         {"filter": {"param": "brush"}},
         {"aggregate": [{"op": "mean", "field": "on_time_pct", "as": "avg_otp"}], "groupby": ["Departing_Port"]}
@@ -53,6 +53,7 @@
       ]
     }
   ],
+  "spacing": 12,
   "padding": 5,
   "config": {"view": {"stroke": null}, "axis": {"labelFontSize": 11, "titleFontSize": 12}}
 }
