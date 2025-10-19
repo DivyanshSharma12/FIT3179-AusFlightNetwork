@@ -1,118 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Australia’s Flight Network</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
-
-  <style>
-    body {
-      margin: 0;
-      background: white;
-      color: black;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "On-time performance (national trend + airport ranking)"},
+  "data": {"url": "data/otp_time_series_web.csv"},
+  "transform": [
+    {"calculate": "(toNumber(datum.Departures_On_Time)/toNumber(datum.Sectors_Flown))*100", "as": "on_time_pct"},
+    {"calculate": "toDate(datum.Year+'-'+(datum.Month_Num<10?'0'+datum.Month_Num:datum.Month_Num)+'-01')", "as": "date"},
+    {"filter": {"field": "Departing_Port", "oneOf": ["Sydney","Melbourne","Brisbane","Perth","Adelaide","Hobart","Darwin"]}},
+    {"filter": "datum.Departing_Port !== 'All Ports'"}
+  ],
+  "vconcat": [
+    {
+      "width": 940,
+      "height": 260,
+      "layer": [
+        {
+          "mark": {"type": "line", "point": true},
+          "encoding": {
+            "x": {"field": "date", "type": "temporal", "timeUnit": "yearmonth", "axis": {"title": ""}},
+            "y": {"aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "title": "On-time %"},
+            "tooltip": [
+              {"field": "date", "type": "temporal", "timeUnit": "yearmonth", "title": "Month"},
+              {"aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "format": ".1f", "title": "Mean on-time %"}
+            ]
+          }
+        },
+        {
+          "mark": {"type": "rule", "strokeDash": [4,4], "opacity": 0.7},
+          "encoding": { "x": {"datum": "2021-07-01"} }
+        },
+        {
+          "mark": {"type": "text", "align": "left", "dx": 6, "dy": -8, "fontSize": 12},
+          "encoding": {
+            "x": {"datum": "2021-07-01"},
+            "y": {"datum": 58},
+            "text": {"value": "COVID-19"}
+          }
+        }
+      ]
+    },
+    {
+      "width": 940,
+      "height": {"step": 26},
+      "transform": [
+        {"aggregate": [{"op": "mean", "field": "on_time_pct", "as": "avg_otp"}], "groupby": ["Departing_Port"]}
+      ],
+      "layer": [
+        {
+          "mark": "bar",
+          "encoding": {
+            "y": {"field": "Departing_Port", "type": "ordinal", "sort": "-x", "title": "Airport"},
+            "x": {"field": "avg_otp", "type": "quantitative", "title": "Avg on-time %"},
+            "tooltip": [
+              {"field": "Departing_Port", "title": "Airport"},
+              {"field": "avg_otp", "type": "quantitative", "format": ".1f", "title": "Avg on-time %"}
+            ]
+          }
+        },
+        {
+          "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": 4},
+          "encoding": {
+            "y": {"field": "Departing_Port", "type": "ordinal", "sort": "-x"},
+            "x": {"field": "avg_otp", "type": "quantitative"},
+            "text": {"field": "avg_otp", "type": "quantitative", "format": ".1f"}
+          }
+        }
+      ]
     }
-
-    .page { max-width: 1100px; margin: 40px auto 64px; padding: 0 16px; }
-    header { text-align: center; margin-bottom: 22px; }
-    h1 { margin: 0 0 8px; letter-spacing: -0.01em; }
-    .lede { color: gray; max-width: 860px; margin: 0 auto 8px; }
-
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(600px, 1.4fr) minmax(420px, 1fr);
-      gap: 18px;
-      align-items: start;
-    }
-    @media (max-width:1080px){ .layout { grid-template-columns: 1fr; } }
-
-    .viz-card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
-      padding: 20px;
-      overflow: hidden;
-    }
-
-    .text-card { padding: 0 6px; background: transparent; }
-    .text-card h3 { margin: 0 0 10px; }
-    .text-card p  { margin: 0 0 10px; line-height: 1.55; }
-
-    #citiesMap, #top_routes, #otp_overview { width: 100%; }
-
-    .mt-36 { margin-top: 36px; }
-  </style>
-</head>
-
-<body>
-  <main class="page">
-    <header>
-      <h1>Australia’s Flight Network</h1>
-      <p class="lede">
-        Australia's flight network is the backbone of our connectivity as a nation. Being the sixth largest country in the world,
-        lots of cities are separated by large distances, making air travel the primary mode of transport for travelling between one city and another.
-        The routes between Melbourne, Sydney and Brisbane represent some of the busiest in the world. The following visualisation explores Australia’s
-        flight network over time, highlighting trends and disruptions that have occurred.
-      </p>
-    </header>
-
-    <section class="layout">
-      <div class="viz-card">
-        <div id="citiesMap" aria-label="Map of major Australian city flight routes"></div>
-      </div>
-
-      <aside class="text-card">
-        <h3>The Map</h3>
-        <p>
-          The map highlights how air traffic reflects where people live and do business. The strong east-coast routes show how concentrated Australia’s
-          population and economy are, while thinner lines to Perth and Darwin remind us how far and isolated those cities are.
-        </p>
-        <p>
-          You can also see how the network responds to major events. The sharp fall in 2020 captures the impact of COVID-19 lockdowns, and the recovery
-          in later years shows how quickly air travel bounced back. Overall, the trends here show how air travel not only connects cities but also reflects
-          the country’s resilience and changing travel habits.
-        </p>
-      </aside>
-    </section>
-
-    <section class="layout mt-36">
-      <div class="viz-card">
-        <h3 style="margin:0 0 10px">Top routes</h3>
-        <div id="top_routes" aria-label="Bar chart of top routes by passengers"></div>
-      </div>
-
-      <aside class="text-card">
-        <h3>Route Rankings</h3>
-        <p>
-          This ranking highlights the busiest city-pairs for the selected year. The area generally known as “Golden Triangle” routes
-          (Melbourne-Sydney-Brisbane) typically dominate, reflecting the busy commute along the east coast of Australia.
-        </p>
-        <p>
-          Routes to Perth and Adelaide tend to rank lower in absolute passengers because of distance and lower frequency,
-          but still carry significant volumes for cross-country travel.
-        </p>
-      </aside>
-    </section>
-
-    <section class="viz-card mt-36">
-      <h3 style="margin:0 0 10px">On-Time Performance</h3>
-      <div id="otp_overview" aria-label="On-time performance overview"></div>
-      <p style="font-size:14px; color:#555; margin-top:12px;">
-        Overall, Australia's flight punctuality has shown strong resilience over the past two decades. On-time performance remained stable around 82–88% through the 2000s, experienced a sharp drop during the COVID-19 period in 2021, and has since rebounded to about 80% in recent years. Among major airports, Adelaide stands out as the most punctual, while Hobart and Darwin record slightly lower averages.
-      </p>
-    </section>
-  </main>
-
-  <script>
-    vegaEmbed('#citiesMap', 'charts/cities_map.json', { actions: false }).catch(console.error);
-    vegaEmbed('#top_routes', 'charts/top_routes.json', { actions: false }).catch(console.error);
-
-
-    vegaEmbed('#otp_overview', 'charts/on_time_perf.json', { actions: false }).catch(console.error);
-  </script>
-</body>
-</html>
+  ],
+  "spacing": 12,
+  "padding": 5,
+  "config": {"view": {"stroke": null}, "axis": {"labelFontSize": 11, "titleFontSize": 12}}
+}
