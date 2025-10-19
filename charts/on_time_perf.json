@@ -1,1 +1,57 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "On-time performance: overview + airport ranking",
+  "data": { "url": "data/otp_time_series_web.csv" },
+  "transform": [
+    { "calculate": "(datum.Departures_On_Time / datum.Sectors_Flown) * 100", "as": "on_time_pct" },
+    { "calculate": "toDate(datum.Year + '-' + (datum.Month_Num < 10 ? '0'+datum.Month_Num : datum.Month_Num) + '-01')", "as": "date" }
+  ],
+  "vconcat": [
+    {
+      "width": "container", "height": 220,
+      "mark": { "type": "line", "point": true },
+      "encoding": {
+        "x": { "field": "date", "type": "temporal", "timeUnit": "yearmonth",
+               "scale": { "domain": { "param": "time_brush" } }, "axis": { "title": "" } },
+        "y": { "aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "title": "On-time %" },
+        "tooltip": [
+          { "field": "date", "type": "temporal", "timeUnit": "yearmonth" },
+          { "aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "format": ".1f", "title": "On-time %" }
+        ]
+      }
+    },
+    {
+      "hconcat": [
+        {
+          "width": 520, "height": 70,
+          "mark": "line",
+          "params": [ { "name": "time_brush", "select": { "type": "interval", "encodings": ["x"] } } ],
+          "encoding": {
+            "x": { "field": "date", "type": "temporal", "timeUnit": "yearmonth" },
+            "y": { "aggregate": "mean", "field": "on_time_pct", "type": "quantitative",
+                   "axis": { "tickCount": 3, "grid": false }, "title": "On-time %" }
+          }
+        },
+        {
+          "width": 380, "height": { "step": 18 },
+          "transform": [
+            { "filter": { "param": "time_brush" } },
+            { "aggregate": [ { "op": "mean", "field": "on_time_pct", "as": "avg_otp" } ],
+              "groupby": ["Departing_Port"] }
+          ],
+          "mark": "bar",
+          "encoding": {
+            "y": { "field": "Departing_Port", "type": "ordinal", "sort": "-x", "title": "Airport" },
+            "x": { "field": "avg_otp", "type": "quantitative", "title": "Avg on-time %" },
+            "tooltip": [
+              { "field": "Departing_Port" },
+              { "field": "avg_otp", "type": "quantitative", "format": ".1f", "title": "Avg on-time %" }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "config": { "view": { "stroke": null } }
+}
 
