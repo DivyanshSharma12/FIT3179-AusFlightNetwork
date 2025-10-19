@@ -27,7 +27,8 @@
 
     {
       "width": 940,
-      "data": {"values": [{"txt": "Australia’s national on-time flight performance remained consistently high through the 2000s, averaging between 82–88%. A sharp decline occurred around 2021, reflecting major operational disruptions during the COVID-19 pandemic. Since then, punctuality has gradually recovered, with current levels stabilising around 75–82% as air travel normalises across the country."}]},
+      "data": {"values": [{"txt": "Australia’s national on-time flight performance remained consistently high through the 2000s, averaging between 82–88%. A sharp decline occurred around 2021, reflecting major operational disruptions 
+        during the COVID-19 pandemic. Since then, punctuality has gradually recovered, with current levels stabilising around 75–82% as air travel normalises across the country."}]},
       "mark": {"type": "text", "align": "left", "baseline": "top"},
       "encoding": { "text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0} },
       "config": { "text": { "fontSize": 12 } }
@@ -65,7 +66,8 @@
 
     {
       "width": 940,
-      "data": {"values": [{"txt": "Adelaide stands out as Australia’s most punctual major airport, averaging around 84% of flights departing on time. Perth and Brisbane follow closely behind, both maintaining reliability above 82%. Sydney and Melbourne record similar performance near 80%, while Hobart and Darwin show slightly lower punctuality, reflecting greater weather and operational variability."}]},
+      "data": {"values": [{"txt": "Adelaide stands out as Australia’s most punctual major airport, averaging around 84% of flights departing on time. Perth and Brisbane follow closely behind, both maintaining reliability above 82%. 
+        Sydney and Melbourne record similar performance near 80%, while Hobart and Darwin show slightly lower punctuality, reflecting greater weather and operational variability."}]},
       "mark": {"type": "text", "align": "left", "baseline": "top"},
       "encoding": { "text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0} },
       "config": { "text": { "fontSize": 12 } }
