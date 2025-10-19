@@ -14,14 +14,10 @@
     { "calculate": "trim(datum.origin)", "as": "Origin" },
     { "calculate": "trim(datum.destination)", "as": "Destination" },
     { "calculate": "toNumber(datum.year)", "as": "YearNum" },
+    { "filter": "isFinite(datum.YearNum) && datum.YearNum == yearSel" },
     { "filter": "datum.Origin !== datum.Destination" },
-    { "filter": "isValid(datum.YearNum) && datum.YearNum == yearSel" },
-    {
-      "aggregate": [
-        { "op": "sum", "field": "passengers", "as": "Passengers" }
-      ],
-      "groupby": ["Origin","Destination"]
-    }
+    { "aggregate": [{"op": "sum", "field": "passengers", "as": "Passengers"}],
+      "groupby": ["Origin","Destination"] }
   ],
 
   "mark": "rect",
@@ -29,20 +25,22 @@
   "encoding": {
     "x": {
       "field": "Origin", "type": "nominal", "title": "Origin",
-      "sort": { "op": "sum", "field": "Passengers", "order": "descending" }
+      "sort": ["MELBOURNE","SYDNEY","BRISBANE","ADELAIDE","HOBART","PERTH","DARWIN"],
+      "axis": {"labelAngle": -40, "labelLimit": 140}
     },
     "y": {
       "field": "Destination", "type": "nominal", "title": "Destination",
-      "sort": { "op": "sum", "field": "Passengers", "order": "descending" }
+      "sort": ["MELBOURNE","SYDNEY","BRISBANE","ADELAIDE","HOBART","PERTH","DARWIN"]
     },
     "color": {
       "field": "Passengers", "type": "quantitative", "title": "Passengers",
-      "scale": { "scheme": "blues" }, "legend": { "format": "," }
+      "scale": { "range": ["#fff5eb", "#fd8d3c", "#b30000"] },
+      "legend": { "format": "," }
     },
     "tooltip": [
-      { "field": "Origin", "type": "nominal", "title": "From" },
-      { "field": "Destination", "type": "nominal", "title": "To" },
-      { "field": "Passengers", "type": "quantitative", "format": "," }
+      {"field": "Origin", "type": "nominal", "title": "From"},
+      {"field": "Destination", "type": "nominal", "title": "To"},
+      {"field": "Passengers", "type": "quantitative", "format": ","}
     ]
   }
 }
