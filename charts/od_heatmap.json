@@ -11,9 +11,9 @@
   ],
 
   "transform": [
-    { "calculate": "upper(trim(datum.origin))",      "as": "Origin" },
-    { "calculate": "upper(trim(datum.destination))", "as": "Destination" },
-    { "calculate": "toNumber(datum.year)",           "as": "YearNum" },
+    { "calculate": "toUpperCase(trim(datum.origin))",      "as": "Origin" },
+    { "calculate": "toUpperCase(trim(datum.destination))", "as": "Destination" },
+    { "calculate": "toNumber(datum.year)",                 "as": "YearNum" },
     { "filter": "isFinite(datum.YearNum) && datum.YearNum == yearSel" },
     { "filter": "datum.Origin !== datum.Destination" },
     { "aggregate": [{"op": "sum", "field": "passengers", "as": "Passengers"}],
@@ -33,10 +33,16 @@
       "scale": {"domain": ["MELBOURNE","SYDNEY","BRISBANE","ADELAIDE","HOBART","PERTH","DARWIN"]}
     },
     "color": {
-      "field": "Passengers", "type": "quantitative", "title": "Passengers",
-      "scale": { "range": ["#fff5eb", "#fd8d3c", "#b30000"] },
+      "field": "Passengers",
+      "type": "quantitative",
+      "title": "Passengers",
+      "scale": {
+        "type": "sqrt",
+        "domainMin": 0,
+        "range": ["white", "moccasin", "sandybrown", "orange", "orangered", "firebrick"]
+      },
       "legend": { "format": "," }
-    },
+},
     "tooltip": [
       {"field": "Origin", "type": "nominal", "title": "From"},
       {"field": "Destination", "type": "nominal", "title": "To"},
