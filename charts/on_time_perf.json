@@ -20,12 +20,7 @@
               "field": "date",
               "type": "temporal",
               "timeUnit": "yearmonth",
-              "axis": {
-                "title": "",
-                "tickCount": { "interval": "year", "step": 2 },
-                "labelAngle": 0,
-                "labelOverlap": "greedy"
-              }
+              "axis": { "title": "", "tickCount": { "interval": "year", "step": 2 }, "labelAngle": 0, "labelOverlap": "greedy" }
             },
             "y": { "aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "title": "On-time %" },
             "tooltip": [
@@ -34,15 +29,8 @@
             ]
           }
         },
-
-        /* --- SIMPLE ANNOTATION (label + leader line) --- */
         {
-          "name": "covidAnno",
-          "data": {
-            "values": [
-              { "annoDate": "2022-06-01", "labelY": 58, "dipY": 52, "label": "COVID-19" }
-            ]
-          },
+          "data": { "values": [ { "annoDate": "2022-06-01", "labelY": 58, "dipY": 52, "label": "COVID-19" } ] },
           "layer": [
             {
               "mark": { "type": "rule", "color": "#a00", "opacity": 0.9 },
@@ -64,7 +52,6 @@
         }
       ]
     },
-
     {
       "width": 940,
       "height": { "step": 26 },
