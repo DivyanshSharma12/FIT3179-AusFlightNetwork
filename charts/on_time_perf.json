@@ -12,15 +12,27 @@
     {
       "width": 940,
       "height": 260,
-      "mark": {"type": "line", "point": true},
-      "encoding": {
-        "x": {"field": "date", "type": "temporal", "timeUnit": "yearmonth", "axis": {"title": ""}},
-        "y": {"aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "title": "On-time %"},
-        "tooltip": [
-          {"field": "date", "type": "temporal", "timeUnit": "yearmonth", "title": "Month"},
-          {"aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "format": ".1f", "title": "Mean on-time %"}
-        ]
-      }
+      "layer": [
+        {
+          "mark": {"type": "line", "point": true},
+          "encoding": {
+            "x": {"field": "date", "type": "temporal", "timeUnit": "yearmonth", "axis": {"title": ""}},
+            "y": {"aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "title": "On-time %"},
+            "tooltip": [
+              {"field": "date", "type": "temporal", "timeUnit": "yearmonth", "title": "Month"},
+              {"aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "format": ".1f", "title": "Mean on-time %"}
+            ]
+          }
+        },
+        {
+          "mark": {"type": "text", "align": "left", "dx": 6, "dy": -8, "fontSize": 12},
+          "encoding": {
+            "x": { "datum": "2022-06-01" },      // put this at the dip month you want
+            "y": { "datum": 55 },                 // nudge up/down to position the label
+            "text": { "value": "COVID-19" }
+          }
+        }
+      ]
     },
     {
       "width": 940,
@@ -53,5 +65,8 @@
   ],
   "spacing": 12,
   "padding": 5,
-  "config": {"view": {"stroke": null}, "axis": {"labelFontSize": 11, "titleFontSize": 12}}
+  "config": {
+    "view": {"stroke": null},
+    "axis": {"labelFontSize": 11, "titleFontSize": 12}
+  }
 }
