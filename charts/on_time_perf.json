@@ -9,36 +9,49 @@
   ],
   "vconcat": [
     {
-      "mark": {"type":"line","point":true},
+      "width": 920,
+      "height": 220,
+      "mark": { "type": "line", "point": true },
       "encoding": {
-        "x": { "field":"date", "type":"temporal", "timeUnit":"yearmonth", "scale":{"domain":{"param":"brush"}}, "axis":{"title":""} },
-        "y": { "aggregate":"mean", "field":"on_time_pct", "type":"quantitative", "title":"On-time %" }
+        "x": { "field": "date", "type": "temporal", "timeUnit": "yearmonth",
+               "scale": { "domain": { "param": "brush" } }, "axis": { "title": "" } },
+        "y": { "aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "title": "On-time %" }
       }
     },
     {
       "hconcat": [
         {
+          "width": 600,
           "height": 70,
           "mark": "line",
-          "params": [ { "name":"brush", "select":{"type":"interval","encodings":["x"]} } ],
+          "params": [ { "name": "brush", "select": { "type": "interval", "encodings": ["x"] } } ],
           "encoding": {
-            "x": { "field":"date", "type":"temporal", "timeUnit":"yearmonth" },
-            "y": { "aggregate":"mean", "field":"on_time_pct", "type":"quantitative", "axis":{"tickCount":3,"grid":false}, "title":"On-time %" }
+            "x": { "field": "date", "type": "temporal", "timeUnit": "yearmonth" },
+            "y": { "aggregate": "mean", "field": "on_time_pct", "type": "quantitative",
+                   "axis": { "tickCount": 3, "grid": false }, "title": "On-time %" }
           }
         },
         {
-          "height": { "step": 18 },
+          "width": 300,
+          "height": { "step": 22 },
           "transform": [
             { "filter": { "param": "brush" } },
-            { "aggregate": [ { "op":"mean", "field":"on_time_pct", "as":"avg_otp" } ], "groupby": ["Departing_Port"] }
+            { "aggregate": [ { "op": "mean", "field": "on_time_pct", "as": "avg_otp" } ],
+              "groupby": ["Departing_Port"] }
           ],
           "mark": "bar",
           "encoding": {
-            "y": { "field":"Departing_Port", "type":"ordinal", "sort":"-x", "title":"Airport" },
-            "x": { "field":"avg_otp", "type":"quantitative", "title":"Avg on-time %" }
+            "y": { "field": "Departing_Port", "type": "ordinal", "sort": "-x", "title": "Airport" },
+            "x": { "field": "avg_otp", "type": "quantitative", "title": "Avg on-time %" }
           }
         }
-      ]
+      ],
+      "spacing": 16
     }
-  ]
+  ],
+  "padding": 5,
+  "config": {
+    "view": { "stroke": null },
+    "axis": { "labelFontSize": 11, "titleFontSize": 12 }
+  }
 }
