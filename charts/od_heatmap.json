@@ -11,11 +11,11 @@
   ],
 
   "transform": [
-    { "calculate": "trim(datum.origin)",      "as": "Origin" },
-    { "calculate": "trim(datum.destination)", "as": "Destination" },
-    { "calculate": "toNumber(datum.year)",    "as": "YearNum" },
-    { "filter": "isFinite(datum.YearNum) && datum.YearNum == yearSel" },
-    { "filter": "datum.Origin !== datum.Destination" },
+    { "calculate": "lower(trim(datum.origin))", "as": "Origin" },
+    { "calculate": "lower(trim(datum.destination))", "as": "Destination" },
+    { "calculate": "toNumber(datum.year)", "as": "YearNum" },
+    { "filter": "datum.YearNum == yearSel" },
+    { "filter": "datum.Origin != datum.Destination" },
     {
       "aggregate": [
         { "op": "sum", "field": "passengers", "as": "Passengers" }
@@ -28,13 +28,17 @@
 
   "encoding": {
     "x": {
-      "field": "Origin", "type": "nominal", "title": "Origin",
-      "scale": {"domain": ["Melbourne","Sydney","Brisbane","Adelaide","Hobart","Perth","Darwin"]},
+      "field": "Origin",
+      "type": "nominal",
+      "title": "Origin",
+      "scale": {"domain": ["melbourne","sydney","brisbane","adelaide","hobart","perth","darwin"]},
       "axis": {"labelAngle": -40, "labelLimit": 140}
     },
     "y": {
-      "field": "Destination", "type": "nominal", "title": "Destination",
-      "scale": {"domain": ["Melbourne","Sydney","Brisbane","Adelaide","Hobart","Perth","Darwin"]}
+      "field": "Destination",
+      "type": "nominal",
+      "title": "Destination",
+      "scale": {"domain": ["melbourne","sydney","brisbane","adelaide","hobart","perth","darwin"]}
     },
     "color": {
       "field": "Passengers",
