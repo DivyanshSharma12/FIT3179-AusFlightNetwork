@@ -1,1 +1,44 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 520,
+  "height": 380,
+  "title": "Origin–Destination passenger volume (by year)",
+  "data": { "url": "data/routes_monthly.csv" },
+
+  "params": [
+    { "name": "yearSel", "value": 2020,
+      "bind": { "input": "range", "min": 2015, "max": 2024, "step": 1, "name": "Year: " } }
+  ],
+
+  "transform": [
+    { "filter": "datum.City1 !== datum.City2" },
+    { "filter": "isValid(datum.Year)" },
+    { "filter": "datum.Year == yearSel" },
+    { "aggregate": [{ "op": "sum", "field": "Passenger_Trips", "as": "Trips" }],
+      "groupby": ["City1","City2"] }
+  ],
+
+  "mark": "rect",
+
+  "encoding": {
+    "x": {
+      "field": "City1", "type": "nominal", "title": "Origin",
+      "sort": { "op": "sum", "field": "Trips", "order": "descending" }
+    },
+    "y": {
+      "field": "City2", "type": "nominal", "title": "Destination",
+      "sort": { "op": "sum", "field": "Trips", "order": "descending" }
+    },
+    "color": {
+      "field": "Trips", "type": "quantitative", "title": "Passenger trips",
+      "scale": { "scheme": "blues" },
+      "legend": { "format": "," }
+    },
+    "tooltip": [
+      { "field": "City1", "type": "nominal", "title": "From" },
+      { "field": "City2", "type": "nominal", "title": "To" },
+      { "field": "Trips", "type": "quantitative", "format": "," }
+    ]
+  }
+}
 
