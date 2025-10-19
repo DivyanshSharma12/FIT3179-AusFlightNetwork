@@ -23,6 +23,16 @@
         ]
       }
     },
+
+
+    {
+      "width": 940,
+      "data": {"values": [{"txt": "Tip: drag across the line to select a period. The ranking below updates to show the most punctual airports in that window."}]},
+      "mark": {"type": "text", "align": "left", "baseline": "top"},
+      "encoding": { "text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0} },
+      "config": { "text": { "fontSize": 12 } }
+    },
+
     {
       "width": 940,
       "height": {"step": 26},
@@ -51,6 +61,14 @@
           }
         }
       ]
+    },
+
+    {
+      "width": 940,
+      "data": {"values": [{"txt": "Reading the bar chart: higher values mean a greater share of flights departed on time during the selected period."}]},
+      "mark": {"type": "text", "align": "left", "baseline": "top"},
+      "encoding": { "text": {"field": "txt"}, "x": {"value": 0}, "y": {"value": 0} },
+      "config": { "text": { "fontSize": 12 } }
     }
   ],
   "spacing": 12,
