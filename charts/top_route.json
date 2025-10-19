@@ -1,1 +1,38 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 520,
+  "height": 360,
+  "title": "Top 10 routes by passengers (selected year)",
+  "data": { "url": "data/routes_monthly.csv", "format": {"type": "csv"} },
+
+  "params": [
+    { "name": "yearSel", "value": 2019,
+      "bind": { "input": "range", "min": 1984, "max": 2020, "step": 1, "name": "Year: " } }
+  ],
+
+  "transform": [
+    { "calculate": "trim(datum.origin)", "as": "Origin" },
+    { "calculate": "trim(datum.destination)", "as": "Destination" },
+    { "calculate": "toNumber(datum.year)", "as": "YearNum" },
+    { "filter": "datum.Origin != datum.Destination" },
+    { "filter": "datum.YearNum == yearSel" },
+    { "calculate": "datum.Origin + ' → ' + datum.Destination", "as": "Route" },
+    { "aggregate": [{"op": "sum", "field": "passengers", "as": "Passengers"}],
+      "groupby": ["Route"] },
+    { "window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "Passengers", "order": "descending"}]},
+    { "filter": "datum.rank <= 10" }
+  ],
+
+  "mark": {"type": "bar", "cornerRadiusEnd": 2},
+
+  "encoding": {
+    "y": {"field": "Route", "type": "nominal", "sort": "-x", "title": null},
+    "x": {"field": "Passengers", "type": "quantitative", "title": "Passengers"},
+    "color": {"value": "steelblue"},
+    "tooltip": [
+      {"field": "Route", "type": "nominal"},
+      {"field": "Passengers", "type": "quantitative", "format": ","}
+    ]
+  }
+}
 
