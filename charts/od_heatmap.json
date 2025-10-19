@@ -14,10 +14,14 @@
     { "calculate": "trim(datum.origin)", "as": "Origin" },
     { "calculate": "trim(datum.destination)", "as": "Destination" },
     { "calculate": "toNumber(datum.year)", "as": "YearNum" },
-    { "filter": "Origin !== Destination" },
-    { "filter": "isValid(YearNum) && YearNum == yearSel" },
-    { "aggregate": [{ "op": "sum", "field": "passengers", "as": "Passengers" }],
-      "groupby": ["Origin","Destination"] }
+    { "filter": "datum.Origin !== datum.Destination" },
+    { "filter": "isValid(datum.YearNum) && datum.YearNum == yearSel" },
+    {
+      "aggregate": [
+        { "op": "sum", "field": "passengers", "as": "Passengers" }
+      ],
+      "groupby": ["Origin","Destination"]
+    }
   ],
 
   "mark": "rect",
