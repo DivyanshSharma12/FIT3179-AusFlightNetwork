@@ -11,13 +11,17 @@
   ],
 
   "transform": [
-    { "calculate": "toUpperCase(trim(datum.origin))",      "as": "Origin" },
-    { "calculate": "toUpperCase(trim(datum.destination))", "as": "Destination" },
-    { "calculate": "toNumber(datum.year)",                 "as": "YearNum" },
+    { "calculate": "trim(datum.origin)",      "as": "Origin" },
+    { "calculate": "trim(datum.destination)", "as": "Destination" },
+    { "calculate": "toNumber(datum.year)",    "as": "YearNum" },
     { "filter": "isFinite(datum.YearNum) && datum.YearNum == yearSel" },
     { "filter": "datum.Origin !== datum.Destination" },
-    { "aggregate": [{"op": "sum", "field": "passengers", "as": "Passengers"}],
-      "groupby": ["Origin","Destination"] }
+    {
+      "aggregate": [
+        { "op": "sum", "field": "passengers", "as": "Passengers" }
+      ],
+      "groupby": ["Origin","Destination"]
+    }
   ],
 
   "mark": "rect",
@@ -25,24 +29,24 @@
   "encoding": {
     "x": {
       "field": "Origin", "type": "nominal", "title": "Origin",
-      "scale": {"domain": ["MELBOURNE","SYDNEY","BRISBANE","ADELAIDE","HOBART","PERTH","DARWIN"]},
+      "scale": {"domain": ["Melbourne","Sydney","Brisbane","Adelaide","Hobart","Perth","Darwin"]},
       "axis": {"labelAngle": -40, "labelLimit": 140}
     },
     "y": {
       "field": "Destination", "type": "nominal", "title": "Destination",
-      "scale": {"domain": ["MELBOURNE","SYDNEY","BRISBANE","ADELAIDE","HOBART","PERTH","DARWIN"]}
+      "scale": {"domain": ["Melbourne","Sydney","Brisbane","Adelaide","Hobart","Perth","Darwin"]}
     },
     "color": {
       "field": "Passengers",
       "type": "quantitative",
       "title": "Passengers",
       "scale": {
-        "type": "sqrt", // had to use this scale as lots of routes were getting blanked
+        "type": "sqrt",
         "domainMin": 0,
-        "range": ["white", "moccasin", "sandybrown", "orange", "orangered", "firebrick"]
+        "range": ["white", "yellow", "orange", "red", "darkred"]
       },
       "legend": { "format": "," }
-},
+    },
     "tooltip": [
       {"field": "Origin", "type": "nominal", "title": "From"},
       {"field": "Destination", "type": "nominal", "title": "To"},
