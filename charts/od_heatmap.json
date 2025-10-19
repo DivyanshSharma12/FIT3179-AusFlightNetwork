@@ -11,9 +11,9 @@
   ],
 
   "transform": [
-    { "calculate": "toUpper(trim(datum.origin))",      "as": "Origin" },
-    { "calculate": "toUpper(trim(datum.destination))", "as": "Destination" },
-    { "calculate": "toNumber(datum.year)",             "as": "YearNum" },
+    { "calculate": "upper(trim(datum.origin))",      "as": "Origin" },
+    { "calculate": "upper(trim(datum.destination))", "as": "Destination" },
+    { "calculate": "toNumber(datum.year)",           "as": "YearNum" },
     { "filter": "isFinite(datum.YearNum) && datum.YearNum == yearSel" },
     { "filter": "datum.Origin !== datum.Destination" },
     { "aggregate": [{"op": "sum", "field": "passengers", "as": "Passengers"}],
