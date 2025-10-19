@@ -37,7 +37,7 @@
       "type": "quantitative",
       "title": "Passengers",
       "scale": {
-        "type": "sqrt",
+        "type": "sqrt", // had to use this scale as lots of routes were getting blanked
         "domainMin": 0,
         "range": ["white", "moccasin", "sandybrown", "orange", "orangered", "firebrick"]
       },
