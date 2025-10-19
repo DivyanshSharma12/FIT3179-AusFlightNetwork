@@ -3,42 +3,42 @@
   "width": 520,
   "height": 380,
   "title": "Origin–Destination passenger volume (by year)",
-  "data": { "url": "data/routes_monthly.csv" },
+  "data": { "url": "data/routes_monthly.csv", "format": {"type": "csv"} },
 
   "params": [
-    { "name": "yearSel", "value": 2020,
-      "bind": { "input": "range", "min": 2015, "max": 2024, "step": 1, "name": "Year: " } }
+    { "name": "yearSel", "value": 2019,
+      "bind": { "input": "range", "min": 1984, "max": 2020, "step": 1, "name": "Year: " } }
   ],
 
   "transform": [
-    { "filter": "datum.City1 !== datum.City2" },
-    { "filter": "isValid(datum.Year)" },
-    { "filter": "datum.Year == yearSel" },
-    { "aggregate": [{ "op": "sum", "field": "Passenger_Trips", "as": "Trips" }],
-      "groupby": ["City1","City2"] }
+    { "calculate": "trim(datum.origin)", "as": "Origin" },
+    { "calculate": "trim(datum.destination)", "as": "Destination" },
+    { "calculate": "toNumber(datum.year)", "as": "YearNum" },
+    { "filter": "Origin !== Destination" },
+    { "filter": "isValid(YearNum) && YearNum == yearSel" },
+    { "aggregate": [{ "op": "sum", "field": "passengers", "as": "Passengers" }],
+      "groupby": ["Origin","Destination"] }
   ],
 
   "mark": "rect",
 
   "encoding": {
     "x": {
-      "field": "City1", "type": "nominal", "title": "Origin",
-      "sort": { "op": "sum", "field": "Trips", "order": "descending" }
+      "field": "Origin", "type": "nominal", "title": "Origin",
+      "sort": { "op": "sum", "field": "Passengers", "order": "descending" }
     },
     "y": {
-      "field": "City2", "type": "nominal", "title": "Destination",
-      "sort": { "op": "sum", "field": "Trips", "order": "descending" }
+      "field": "Destination", "type": "nominal", "title": "Destination",
+      "sort": { "op": "sum", "field": "Passengers", "order": "descending" }
     },
     "color": {
-      "field": "Trips", "type": "quantitative", "title": "Passenger trips",
-      "scale": { "scheme": "blues" },
-      "legend": { "format": "," }
+      "field": "Passengers", "type": "quantitative", "title": "Passengers",
+      "scale": { "scheme": "blues" }, "legend": { "format": "," }
     },
     "tooltip": [
-      { "field": "City1", "type": "nominal", "title": "From" },
-      { "field": "City2", "type": "nominal", "title": "To" },
-      { "field": "Trips", "type": "quantitative", "format": "," }
+      { "field": "Origin", "type": "nominal", "title": "From" },
+      { "field": "Destination", "type": "nominal", "title": "To" },
+      { "field": "Passengers", "type": "quantitative", "format": "," }
     ]
   }
 }
-
