@@ -23,7 +23,8 @@
     "y": {"field": "Year", "type": "ordinal", "sort": "ascending", "title": "Year"},
     "color": {
       "field": "avg_otp", "type": "quantitative", "title": "On-time %",
-      "scale": {"scheme": "yelloworangered", "domain": [60, 90]}
+      "scale": {"scheme": "yelloworangered", "domain": [60, 90]},
+      "legend": {"orient": "bottom"} 
     },
     
     "tooltip": [
