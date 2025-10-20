@@ -134,11 +134,11 @@
   </main>
 
   <script>
-    vegaEmbed('#citiesMap', 'charts/cities_map.json', { actions: false }).catch(console.error);
-    vegaEmbed('#top_routes', 'charts/top_routes.json', { actions: false }).catch(console.error);
-    vegaEmbed('#otp_overview', 'charts/on_time_perf.json', { actions: false }).catch(console.error);
-    vegaEmbed('#otp_monthly', 'charts/otp_monthly.json', { actions: false }).catch(console.error);
-    vegaEmbed('#flights_year', 'charts/flights_year.json', { actions: false }).catch(console.error);
+    vegaEmbed('#citiesMap', 'charts/cities_map.json', { actions: true }).catch(console.error);
+    vegaEmbed('#top_routes', 'charts/top_routes.json', { actions: true }).catch(console.error);
+    vegaEmbed('#otp_overview', 'charts/on_time_perf.json', { actions: true }).catch(console.error);
+    vegaEmbed('#otp_monthly', 'charts/otp_monthly.json', { actions: true }).catch(console.error);
+    vegaEmbed('#flights_year', 'charts/flights_year.json', { actions: true }).catch(console.error);
   </script>
 </body>
 </html>
