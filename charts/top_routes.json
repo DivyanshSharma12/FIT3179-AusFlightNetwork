@@ -3,6 +3,7 @@
   "width": 520,
   "height": 360,
   "title": "Top 10 routes by passengers (selected year)",
+  "description": "Had to trim data as CSV file had a mix of how the cities were presented",
   "data": { "url": "data/routes_monthly.csv", "format": {"type": "csv"} },
 
   "params": [
