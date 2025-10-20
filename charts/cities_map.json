@@ -3,7 +3,7 @@
   "width": "container",
   "height": 520,
   "title": "Major Australian Cities (primary airports)",
-  "projection": { "type": "mercator", "center": [134, -26], "scale": 600 },
+  "projection": { "type": "conicEqualArea", "center": [134, -26], "scale": 600 },
 
   "params": [
     {
@@ -20,7 +20,7 @@
         "format": { "type": "topojson", "feature": "countries" }
       },
       "transform": [{ "filter": "datum.properties.name == 'Australia'" }],
-      "mark": { "type": "geoshape", "fill": "#eee", "stroke": "white" }
+      "mark": { "type": "geoshape", "fill": "lightgray", "stroke": "white" }
     },
 
     {
@@ -32,7 +32,7 @@
           "groupby": ["origin","destination","lon_o","lat_o","lon_d","lat_d","year"]
         }
       ],
-      "mark": { "type": "rule", "strokeCap": "round" },
+      "mark": { "type": "rule"},
       "encoding": {
         "longitude": { "field": "lon_o", "type": "quantitative" },
         "latitude":  { "field": "lat_o", "type": "quantitative" },
