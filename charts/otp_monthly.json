@@ -6,44 +6,31 @@
   "data": {"url": "data/otp_time_series_web.csv"},
   "transform": [
     {"calculate": "(toNumber(datum.Departures_On_Time)/toNumber(datum.Sectors_Flown))*100", "as": "on_time_pct"},
-    {"aggregate": [{"op": "mean", "field": "on_time_pct", "as": "avg_otp"}], "groupby": ["Year","Month_Num"]}
+    {"calculate": "toNumber(datum.Month_Num)", "as": "Mon"},             // <- coerce to number
+    {"aggregate": [{"op": "mean", "field": "on_time_pct", "as": "avg_otp"}],
+     "groupby": ["Year","Mon"]},
+    {"calculate": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.Mon-1]", "as": "MonLabel"}
   ],
-  "layer": [
-    {
-      "mark": {"type": "rect"},
-      "encoding": {
-        "x": {
-          "field": "Month_Num", "type": "ordinal", "title": "Month",
-          "sort": [1,2,3,4,5,6,7,8,9,10,11,12],
-          "axis": {
-            "labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value-1]"
-          }
-        },
-        "y": {"field": "Year", "type": "ordinal", "sort": "ascending", "title": "Year"},
-        "color": {
-          "field": "avg_otp", "type": "quantitative", "title": "On-time %",
-          "scale": {"scheme": "yelloworangered", "domain": [60,90]}
-        },
-        "tooltip": [
-          {"field": "Year"},
-          {"field": "Month_Num", "title": "Month",
-           "type": "ordinal",
-           "format": "",
-           "labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value-1]"
-          },
-          {"field": "avg_otp", "title": "On-time %", "format": ".1f"}
-        ]
-      }
+  
+  "mark": {"type": "rect"},
+  "encoding": {
+    "x": {
+      "field": "Mon", "type": "ordinal", "title": "Month",
+      "sort": [1,2,3,4,5,6,7,8,9,10,11,12],
+      "axis": {"labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value-1]"}
     },
-    {
-      "data": {"values": [{"Year": 2020, "Month_Num": 4, "label": "COVID-19"}]},
-      "mark": {"type": "text", "align": "left", "dx": 8, "dy": -6},
-      "encoding": {
-        "x": {"field": "Month_Num", "type": "ordinal"},
-        "y": {"field": "Year", "type": "ordinal"},
-        "text": {"field": "label"}
-      }
-    }
-  ],
+    
+    "y": {"field": "Year", "type": "ordinal", "sort": "ascending", "title": "Year"},
+    "color": {
+      "field": "avg_otp", "type": "quantitative", "title": "On-time %",
+      "scale": {"scheme": "yelloworangered", "domain": [60, 90]}
+    },
+    
+    "tooltip": [
+      {"field": "Year"},
+      {"field": "MonLabel", "title": "Month"},
+      {"field": "avg_otp", "title": "On-time %", "format": ".1f"}
+    ]
+  },
   "config": { "axis": {"labelFontSize": 11, "titleFontSize": 12, "grid": false}, "view": {"stroke": null} }
 }
