@@ -107,12 +107,21 @@
         Hobart and Darwin are lower (~76–78%), hinting at stronger weather and operational effects. 
       </p>
     </section>
+
+    <section class="mt-36">
+      <h3 style="margin:0 0 10px">Seasonality & Shock</h3>
+      <div id="otp_seasonality" aria-label="Heatmap of on-time performance by month and year"></div>
+      <p class="caption">
+        A month × year view of national on-time %, revealing seasonality and the Apr 2020 shock.
+      </p>
+    </section>
   </main>
 
   <script>
     vegaEmbed('#citiesMap', 'charts/cities_map.json', { actions: false }).catch(console.error);
     vegaEmbed('#top_routes', 'charts/top_routes.json', { actions: false }).catch(console.error);
     vegaEmbed('#otp_overview', 'charts/on_time_perf.json', { actions: false }).catch(console.error);
+    vegaEmbed('#otp_seasonality', 'charts/otp_seasonality.json', { actions: false }).catch(console.error);
   </script>
 </body>
 </html>
