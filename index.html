@@ -40,7 +40,7 @@
     .text-card h3 { margin: 0 0 10px; }
     .text-card p  { margin: 0 0 10px; line-height: 1.55; }
 
-#citiesMap, #top_routes, #otp_overview, #otp_monthly, #flights_per_year { width: 100%; }
+#citiesMap, #top_routes, #otp_overview, #otp_monthly, #flights_year { width: 100%; }
 
     .mt-36 { margin-top: 36px; }
   </style>
@@ -122,7 +122,7 @@
 
     <section class="viz-card mt-36">
         <h3 style="margin:0 0 10px">Flight Volume Through Time</h3>
-        <div id="flights_per_year" aria-label="Bar chart of total flights per year"></div>
+        <div id="flights_year" aria-label="Bar chart of total flights per year"></div>
         <p style="font-size:14px; color:black; margin-top:12px;">
           A single-number story: national flight volume collapsed in 2020, then steadily recovered.
           This provides the activity backdrop that helps explain swings in punctuality elsewhere.
@@ -137,7 +137,7 @@
     vegaEmbed('#top_routes', 'charts/top_routes.json', { actions: false }).catch(console.error);
     vegaEmbed('#otp_overview', 'charts/on_time_perf.json', { actions: false }).catch(console.error);
     vegaEmbed('#otp_monthly', 'charts/otp_monthly.json', { actions: false }).catch(console.error);
-    vegaEmbed('#flights_per_year', 'charts/flights_per_year.json', { actions: false }).catch(console.error);
+    vegaEmbed('#flights_year', 'charts/flights_year.json', { actions: false }).catch(console.error);
   </script>
 </body>
 </html>
