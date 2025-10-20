@@ -1,56 +1,49 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text": "On-Time Performance Seasonality (Month × Year)"},
+  "title": {"text": "On-Time Performance Seasonality"},
   "width": 980,
   "height": 340,
   "data": {"url": "data/otp_time_series_web.csv"},
   "transform": [
-    {
-      "calculate": "(toNumber(datum.Departures_On_Time)/toNumber(datum.Sectors_Flown))*100",
-      "as": "on_time_pct"
-    },
-    {
-      "aggregate": [{"op": "mean", "field": "on_time_pct", "as": "avg_otp"}],
-      "groupby": ["Year","Month_Num"]
-    },
-    { "calculate": "timeFormat(datetime(2000, datum.Month_Num-1, 1), '%b')", "as": "Month" }
+    {"calculate": "(toNumber(datum.Departures_On_Time)/toNumber(datum.Sectors_Flown))*100", "as": "on_time_pct"},
+    {"aggregate": [{"op": "mean", "field": "on_time_pct", "as": "avg_otp"}], "groupby": ["Year","Month_Num"]}
   ],
   "layer": [
     {
       "mark": {"type": "rect"},
       "encoding": {
         "x": {
-          "field": "Month",
-          "type": "ordinal",
-          "title": "Month",
-          "sort": ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+          "field": "Month_Num", "type": "ordinal", "title": "Month",
+          "sort": [1,2,3,4,5,6,7,8,9,10,11,12],
+          "axis": {
+            "labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value-1]"
+          }
         },
-        "y": {"field": "Year", "type": "ordinal", "sort": "ascending"},
+        "y": {"field": "Year", "type": "ordinal", "sort": "ascending", "title": "Year"},
         "color": {
-          "field": "avg_otp",
-          "type": "quantitative",
-          "title": "On-time %",
-          "scale": {"scheme": "blues", "domain": [60, 90]}
+          "field": "avg_otp", "type": "quantitative", "title": "On-time %",
+          "scale": {"scheme": "yelloworangered", "domain": [60,90]}
         },
         "tooltip": [
           {"field": "Year"},
-          {"field": "Month", "title": "Month"},
+          {"field": "Month_Num", "title": "Month",
+           "type": "ordinal",
+           "format": "",
+           "labelExpr": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.value-1]"
+          },
           {"field": "avg_otp", "title": "On-time %", "format": ".1f"}
         ]
       }
     },
     {
-      "data": {"values": [{"Year": 2020, "Month": "Apr", "label": "COVID-19"}]},
+      "data": {"values": [{"Year": 2020, "Month_Num": 4, "label": "COVID-19"}]},
       "mark": {"type": "text", "align": "left", "dx": 8, "dy": -6},
       "encoding": {
-        "x": {"field": "Month", "type": "ordinal"},
+        "x": {"field": "Month_Num", "type": "ordinal"},
         "y": {"field": "Year", "type": "ordinal"},
         "text": {"field": "label"}
       }
     }
   ],
-  "config": {
-    "axis": {"labelFontSize": 11, "titleFontSize": 12, "grid": false},
-    "view": {"stroke": null}
-  }
+  "config": { "axis": {"labelFontSize": 11, "titleFontSize": 12, "grid": false}, "view": {"stroke": null} }
 }
