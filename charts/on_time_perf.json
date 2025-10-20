@@ -33,7 +33,7 @@
           "data": { "values": [ { "annoDate": "2022-06-01", "labelY": 58, "dipY": 52, "label": "COVID-19" } ] },
           "layer": [
             {
-              "mark": { "type": "rule", "color": "#a00", "opacity": 0.9 },
+              "mark": { "type": "rule", "color": "darkblue", "opacity": 0.9 },
               "encoding": {
                 "x": { "field": "annoDate", "type": "temporal" },
                 "y": { "field": "labelY", "type": "quantitative" },
@@ -41,7 +41,7 @@
               }
             },
             {
-              "mark": { "type": "text", "align": "left", "dx": 6, "dy": -6, "fontSize": 12, "color": "#a00" },
+              "mark": { "type": "text", "align": "left", "dx": 6, "dy": -6, "fontSize": 12, "color": "darkblue" },
               "encoding": {
                 "x": { "field": "annoDate", "type": "temporal" },
                 "y": { "field": "labelY", "type": "quantitative" },
