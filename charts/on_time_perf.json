@@ -20,7 +20,7 @@
               "field": "date",
               "type": "temporal",
               "timeUnit": "yearmonth",
-              "axis": { "title": "", "tickCount": { "interval": "year", "step": 2 }, "labelAngle": 0, "labelOverlap": "greedy" }
+              "axis": { "title": "", "tickCount": { "interval": "year", "step": 2 }, "labelAngle": 0}
             },
             "y": { "aggregate": "mean", "field": "on_time_pct", "type": "quantitative", "title": "On-time %" },
             "tooltip": [
