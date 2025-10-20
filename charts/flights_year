@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": {"text": "Total Flights per Year (National)"},
+  "title": {"text": "Total Flights per Year"},
   "width": 980,
   "height": 280,
   "data": {"url": "data/otp_time_series_web.csv"},
