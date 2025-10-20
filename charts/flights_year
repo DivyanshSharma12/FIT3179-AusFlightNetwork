@@ -1,1 +1,18 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "Total Flights per Year (National)"},
+  "width": 980,
+  "height": 280,
+  "data": {"url": "data/otp_time_series_web.csv"},
+  "transform": [
+    {"aggregate": [{"op": "sum", "field": "Sectors_Flown", "as": "flights"}], "groupby": ["Year"]}
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "x": {"field": "Year", "type": "ordinal", "title": "Year", "sort": "ascending"},
+    "y": {"field": "flights", "type": "quantitative", "title": "Flights (sectors)", "axis": {"format": ",.0f"}},
+    "tooltip": [{"field": "Year"}, {"field": "flights", "title": "Flights", "format": ",.0f"}]
+  },
+  "config": {"axis": {"labelFontSize": 11, "titleFontSize": 12}, "view": {"stroke": null}}
+}
 
