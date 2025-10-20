@@ -1,1 +1,63 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {"text": "On-Time Performance Seasonality (Month × Year)"},
+  "width": 980,
+  "height": 340,
+  "data": {"url": "data/otp_time_series_web.csv"},
+  "transform": [
+    {
+      "calculate": "(toNumber(datum.Departures_On_Time)/toNumber(datum.Sectors_Flown))*100",
+      "as": "on_time_pct"
+    },
+    {
+      "calculate": "toDate(datum.Year+'-'+(datum.Month_Num<10?'0'+datum.Month_Num:datum.Month_Num)+'-01')",
+      "as": "date"
+    },
+    {
+      "aggregate": [{"op": "mean", "field": "on_time_pct", "as": "avg_otp"}],
+      "groupby": ["Year","Month_Num"]
+    },
+    {"calculate": "format(datetime(2000, datum.Month_Num-1, 1), '%b')", "as": "Month"}
+  ],
+  "layer": [
+    {
+      "mark": {"type": "rect"},
+      "encoding": {
+        "x": {"field": "Month_Num", "type": "ordinal", "title": "Month",
+              "sort": "ascending", "axis": {"labelExpr": "datum.label"}},
+        "y": {"field": "Year", "type": "ordinal", "sort": "ascending"},
+        "color": {
+          "field": "avg_otp", "type": "quantitative", "title": "On-time %",
+          "scale": {"scheme": "blues"}
+        },
+        "tooltip": [
+          {"field": "Year"}, {"field": "Month", "title": "Month"},
+          {"field": "avg_otp", "title": "On-time %", "format": ".1f"}
+        ]
+      }
+    },
+
+    {
+      "data": {"values": [{"Year": 2020, "Month_Num": 4, "label": "COVID-19 shock"}]},
+      "mark": {"type": "text", "align": "left", "dx": 8, "dy": -6},
+      "encoding": {
+        "x": {"field": "Month_Num", "type": "ordinal"},
+        "y": {"field": "Year", "type": "ordinal"},
+        "text": {"field": "label"}
+      }
+    },
+    {
+      "data": {"values": [{"Year": 2020, "Month_Num": 4}]},
+      "mark": {"type": "rule", "strokeDash": [4,4]},
+      "encoding": {
+        "x": {"field": "Month_Num", "type": "ordinal"},
+        "y": {"field": "Year", "type": "ordinal"}
+      }
+    }
+  ],
+  "config": {
+    "axis": {"labelFontSize": 11, "titleFontSize": 12, "grid": false},
+    "view": {"stroke": null}
+  }
+}
 
