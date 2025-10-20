@@ -6,7 +6,7 @@
   "data": {"url": "data/otp_time_series_web.csv"},
   "transform": [
     {"calculate": "(toNumber(datum.Departures_On_Time)/toNumber(datum.Sectors_Flown))*100", "as": "on_time_pct"},
-    {"calculate": "toNumber(datum.Month_Num)", "as": "Mon"},             // <- coerce to number
+    {"calculate": "toNumber(datum.Month_Num)", "as": "Mon"},
     {"aggregate": [{"op": "mean", "field": "on_time_pct", "as": "avg_otp"}],
      "groupby": ["Year","Mon"]},
     {"calculate": "['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][datum.Mon-1]", "as": "MonLabel"}
