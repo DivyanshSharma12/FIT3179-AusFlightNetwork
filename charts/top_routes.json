@@ -10,18 +10,18 @@
       "bind": { "input": "range", "min": 1984, "max": 2020, "step": 1, "name": "Year: " } }
   ],
 
-  "transform": [
-    { "calculate": "trim(datum.origin)", "as": "Origin" },
-    { "calculate": "trim(datum.destination)", "as": "Destination" },
-    { "calculate": "toNumber(datum.year)", "as": "YearNum" },
-    { "filter": "datum.Origin != datum.Destination" },
-    { "filter": "datum.YearNum == yearSel" },
-    { "calculate": "datum.Origin + ' → ' + datum.Destination", "as": "Route" },
-    { "aggregate": [{"op": "sum", "field": "passengers", "as": "Passengers"}],
-      "groupby": ["Route"] },
-    { "window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "Passengers", "order": "descending"}]},
-    { "filter": "datum.rank <= 10" }
-  ],
+    "transform": [
+      { "calculate": "toNumber(datum.year)", "as": "YearNum" },
+      { "filter": "datum.origin != datum.destination" },
+      { "filter": "datum.YearNum == yearSel" },
+      { "calculate": "datum.origin + ' → ' + datum.destination", "as": "Route" },
+      { "aggregate": [{"op": "sum", "field": "passengers", "as": "Passengers"}],
+        "groupby": ["Route"] },
+      { "window": [{"op": "rank", "as": "rank"}],
+        "sort": [{"field": "Passengers", "order": "descending"}]},
+      { "filter": "datum.rank <= 10" }
+    ]
+
 
   "mark": {"type": "bar", "cornerRadiusEnd": 2},
 
