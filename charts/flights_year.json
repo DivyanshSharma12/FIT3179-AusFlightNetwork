@@ -7,7 +7,7 @@
   "transform": [
     {"aggregate": [{"op": "sum", "field": "Sectors_Flown", "as": "flights"}], "groupby": ["Year"]}
   ],
-  "mark": {"type": "bar"},
+"mark": { "type": "bar", "color": "darkgreen" },
   "encoding": {
     "x": {"field": "Year", "type": "ordinal", "title": "Year", "sort": "ascending"},
     "y": {"field": "flights", "type": "quantitative", "title": "Flights (sectors)", "axis": {"format": ",.0f"}},
